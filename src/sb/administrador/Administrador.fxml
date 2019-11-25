@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="607.0" prefWidth="937.0" style="-fx-background-color: #302F2F;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sb.administrador.AdministradorController">
+   <children>
+      <ImageView fitHeight="85.0" fitWidth="117.0" layoutX="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../imagenes/sb.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="85.0" fitWidth="117.0" layoutX="776.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../imagenes/sb.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="353.0" layoutY="12.0" prefHeight="51.0" prefWidth="183.0" text="Registro" textFill="WHITE" underline="true">
+         <font>
+            <Font name="System Italic" size="42.0" />
+         </font>
+      </Label>
+      <TableView fx:id="table_clientes" layoutX="244.0" layoutY="74.0" prefHeight="465.0" prefWidth="686.0">
+        <columns>
+          <TableColumn fx:id="col_id" prefWidth="54.0" text="id" />
+          <TableColumn fx:id="col_nombre" prefWidth="63.0" text="nombre" />
+            <TableColumn fx:id="col_ap" prefWidth="109.0" text="Apellido Paterno" />
+            <TableColumn fx:id="col_am" prefWidth="106.0" text="Apellido Materno" />
+            <TableColumn fx:id="col_edad" minWidth="6.0" prefWidth="41.0" text="edad" />
+            <TableColumn fx:id="col_tel" prefWidth="69.0" text="telefono" />
+            <TableColumn fx:id="col_inicio" prefWidth="49.0" text="inicio" />
+            <TableColumn fx:id="col_vencimiento" prefWidth="87.0" text="vencimiento" />
+            <TableColumn fx:id="col_comentario" prefWidth="100.0" text="observaciones" />
+            <TableColumn fx:id="col_foto_usuario" minWidth="4.0" prefWidth="4.0" text="foto" />
+        </columns>
+      </TableView>
+      <ImageView fx:id="usuario" fitHeight="69.0" fitWidth="85.0" layoutX="74.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../imagenes/user.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="tf_nombre" layoutX="34.0" layoutY="170.0" promptText="nombre" />
+      <TextField fx:id="tf_apellido_materno" layoutX="34.0" layoutY="212.0" promptText="Apellido Paterno" />
+      <TextField fx:id="tf_apellido_paterno" layoutX="34.0" layoutY="253.0" promptText="Apellido Materno" />
+      <TextField fx:id="tf_edad" layoutX="34.0" layoutY="294.0" promptText="Edad" />
+      <TextField fx:id="tf_telefono" layoutX="34.0" layoutY="337.0" promptText="Telefono" />
+      <DatePicker fx:id="inicio" layoutX="22.0" layoutY="377.0" promptText="fecha de inicio" />
+      <DatePicker fx:id="fin" layoutX="22.0" layoutY="418.0" promptText="fecha de vencimiento" />
+      <TextArea fx:id="ta_comentario" layoutX="16.0" layoutY="461.0" prefHeight="106.0" prefWidth="211.0" promptText="Comentarios" />
+      <Button layoutX="93.0" layoutY="577.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="25.0" prefWidth="69.0" text="Eliminar" />
+      <Button layoutX="17.0" layoutY="577.0" mnemonicParsing="false" onAction="#editar" prefHeight="25.0" prefWidth="69.0" text="Editar" />
+      <Button layoutX="170.0" layoutY="577.0" mnemonicParsing="false" onAction="#seleccionar" prefHeight="25.0" prefWidth="76.0" text="Seleccionar" />
+   </children>
+</AnchorPane>

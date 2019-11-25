@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="435.0" prefWidth="552.0" style="-fx-background-color: #302F2F;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sb.FXMLDocumentController">
+    <children>
+      <ImageView fitHeight="207.0" fitWidth="159.0" layoutX="391.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/brazo-mancuerna.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="113.0" fitWidth="121.0" layoutX="220.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="219.1674041748047">
+         <image>
+            <Image url="@../imagenes/sb.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="107.0" layoutY="104.0" prefHeight="89.0" prefWidth="304.0" text="Bienvenido" textFill="WHITE">
+         <font>
+            <Font size="61.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="126.0" fitWidth="126.0" layoutX="406.0" layoutY="193.0" onMouseClicked="#reporte" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/reporte.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="126.0" fitWidth="214.0" layoutY="194.0" onMouseClicked="#admin" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/admin.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="126.0" fitWidth="138.0" layoutX="231.0" layoutY="193.0" onMouseClicked="#cliente" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/agregar.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+    </children>
+</AnchorPane>
