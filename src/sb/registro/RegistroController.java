@@ -1,20 +1,31 @@
 package sb.registro;
 
 
+import com.digitalpersona.onetouch.DPFPDataPurpose;
+import com.digitalpersona.onetouch.DPFPFeatureSet;
 import com.digitalpersona.onetouch.DPFPGlobal;
 import com.digitalpersona.onetouch.DPFPSample;
 import com.digitalpersona.onetouch.DPFPTemplate;
 import com.digitalpersona.onetouch.capture.DPFPCapture;
+import com.digitalpersona.onetouch.capture.event.DPFPDataAdapter;
 import com.digitalpersona.onetouch.capture.event.DPFPDataEvent;
 import com.digitalpersona.onetouch.capture.event.DPFPDataListener;
+import com.digitalpersona.onetouch.capture.event.DPFPErrorAdapter;
+import com.digitalpersona.onetouch.capture.event.DPFPErrorEvent;
 import com.digitalpersona.onetouch.capture.event.DPFPErrorListener;
 import com.digitalpersona.onetouch.capture.event.DPFPReaderStatusAdapter;
 import com.digitalpersona.onetouch.capture.event.DPFPReaderStatusEvent;
 import com.digitalpersona.onetouch.capture.event.DPFPReaderStatusListener;
+import com.digitalpersona.onetouch.capture.event.DPFPSensorAdapter;
+import com.digitalpersona.onetouch.capture.event.DPFPSensorEvent;
 import com.digitalpersona.onetouch.processing.DPFPEnrollment;
+import com.digitalpersona.onetouch.processing.DPFPFeatureExtraction;
+import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
+import com.digitalpersona.onetouch.processing.DPFPTemplateStatus;
 import com.digitalpersona.onetouch.verification.DPFPVerification;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +41,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -63,7 +75,7 @@ public class RegistroController implements Initializable {
     boolean imagen = false;
     //para validar la imagen es con una variable boolena 
     /////////////////////////////////////////
-    private DPFPCapture Lector = DPFPGlobal.getCaptureFactory().createCapture();
+
     private DPFPEnrollment Reclutador =
     DPFPGlobal.getEnrollmentFactory().createEnrollment();
     private DPFPVerification Verificador =
@@ -72,10 +84,13 @@ public class RegistroController implements Initializable {
     public static String TEMPLATE_PROPERTY = "template";
     private DPFPCapture lector = DPFPGlobal.getCaptureFactory().createCapture();
     
+    public DPFPFeatureSet featuresinscripcion;
+    public DPFPFeatureSet featuresverificacion;
+    private Boolean activo;
+
+    
     @FXML
     public void insert() throws SQLException{
-        System.out.println("fis" + fis);
-        System.out.println("file" + file);
             try {
 
                 this.connection = new SQLConnection("root", "", "sb").getConnection();
@@ -96,10 +111,6 @@ public class RegistroController implements Initializable {
             LocalDate f = fin.getValue();
             String observacion = observaciones.getText();
             
-//            while(){
-//                
-//            }
-            
 
             if (connection != null) {
                 PreparedStatement statement = connection.prepareStatement(
@@ -115,8 +126,17 @@ public class RegistroController implements Initializable {
                 statement.setDate(6, Date.valueOf(i));
                 statement.setDate(7, Date.valueOf(f));
                 statement.setString(8, observacion);                
-                statement.setBytes(9, bytearray);
+                DPFPTemplate temp = getTemplate();
+                if (temp != null) {
+                    byte[] b = temp.serialize();
+                    statement.setBytes(9, b);
+                }
+                //statement.setBytes(10, bytearray);
+//                statement.setBinaryStream(10, (InputStream) fis, (int)file.length());
                 statement.setBinaryStream(10, (InputStream) fis, (int)file.length());
+                //ByteArrayInputStream datosHuella = new ByteArrayInputStream(getTemplate().serialize());
+
+                //statement.setBinaryStream(10, datosHuella);
                 
                 int executeUpdate = statement.executeUpdate();
                 System.out.println(executeUpdate);
@@ -144,64 +164,203 @@ public class RegistroController implements Initializable {
         }
     }
     
-    /////////////////////////////////Metodos nuevos////////////////////////////////////////////
-    @FXML
-    protected void procesarHuella(DPFPSample sample) throws IOException{
-//        lector.startCapture();
-        System.out.println("aqui paso");
+    /////////////////////////////////Metodos nuevos////////////////////////////////////////////////////////////
+
+    public void Iniciar(){
+        start();
+        System.out.println("funciona");
+        lector.addDataListener(new DPFPDataAdapter() {
+            @Override 
+            public void dataAcquired(final DPFPDataEvent e) {
+                Platform.runLater(new Runnable(){                
+                    @Override
+                    public void run(){
+                        try {
+                            System.out.println("la huella se capturo");
+                            ProcesarCaptura(e.getSample());
+                        } catch (IOException ex) {
+                            Logger.getLogger(RegistroController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }           
+                });            
+            }   
+            
+        });
+
+        lector.addReaderStatusListener(new DPFPReaderStatusAdapter() {
+            @Override 
+            public void readerConnected(final DPFPReaderStatusEvent e) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        EnviarTexto("El Sensor de Huella Digital esta Activado o Conectado");
+                    }
+                });                
+            }
+            @Override 
+            public void readerDisconnected(final DPFPReaderStatusEvent e) {
+                Platform.runLater(new Runnable(){                
+                    @Override
+                    public void run(){
+                        EnviarTexto("El Sensor de Huella Digital esta Desactivado o no Conectado");
+                        
+                    }           
+                });
+            }
+        });
+
+        lector.addSensorListener(new DPFPSensorAdapter() {
+            @Override 
+            public void fingerTouched(final DPFPSensorEvent e) {
+                Platform.runLater(new Runnable(){                
+                    @Override
+                    public void run(){
+                        EnviarTexto("El dedo ha sido colocado sobre el Lector de Huella");
+                    }           
+                });
+            }
+            @Override 
+            public void fingerGone(final DPFPSensorEvent e) {
+                Platform.runLater(new Runnable(){                
+                    @Override
+                    public void run(){
+                        EnviarTexto("El dedo ha sido quitado del Lector de Huella");
+                        
+                    }           
+                });
+            }
+                
+        });
+
+        lector.addErrorListener(new DPFPErrorAdapter(){
+            public void errorReader(final DPFPErrorEvent e){
+                Platform.runLater(new Runnable(){                
+                    @Override
+                    public void run(){
+                        EnviarTexto("El dedo ha sido quitado del Lector de Huella");
+                        
+                    }           
+                });
+            }
+        });
+    }
+    
+    public void EnviarTexto(String msg){
+        new Alert(Alert.AlertType.INFORMATION, msg).show();
+    }
+    
+    public  void ProcesarCaptura(DPFPSample sample) throws IOException{
+        System.out.println("entro a procesar");
+        setTemplate(Reclutador.getTemplate());
         java.awt.Image imagen = DPFPGlobal.getSampleConversionFactory().createImage(sample);
         Image img = SwingFXUtils.toFXImage((BufferedImage) imagen, null);
-        huella.setImage(img);           
+        huella.setImage(img);
+        
         //bytearray = new byte[(int)img];
-        ByteArrayOutputStream  byteOutput = new ByteArrayOutputStream();
-        ImageIO.write( SwingFXUtils.fromFXImage( img, null ), "png", byteOutput );        
-        bytearray = byteOutput.toByteArray();
-    }
-    
-    @FXML
-    public void activar(){
-        lector.startCapture();
-        System.out.println("se ha actviado");
-        lector.addDataListener((DPFPDataEvent dpfpde) -> {
-            try {
-                procesarHuella(dpfpde.getSample());
-            } catch (IOException ex) {
-                Logger.getLogger(RegistroController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        System.out.println("hola");
-        ///Esto obtiene la huella 
-        lector.addDataListener(new DPFPDataListener() {
-             @Override 
-             public void dataAcquired(DPFPDataEvent dpfpde) {
-                 System.out.println(dpfpde);
-                 
-             }
-         });
-         
-        lector.addReaderStatusListener(new DPFPReaderStatusListener() {
-            @Override
-            public void readerConnected(DPFPReaderStatusEvent dpfprs) {
-                
-            }
+        ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
+        ImageIO.write(SwingFXUtils.fromFXImage(img, null), "png", byteOutput);
+        // Procesar la muestra de la huella y crear un conjunto de características con el propósito de inscripción.
+        featuresinscripcion = extraerCaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_ENROLLMENT);
 
-            @Override
-            public void readerDisconnected(DPFPReaderStatusEvent dpfprs) {
-                
+        // Procesar la muestra de la huella y crear un conjunto de características con el propósito de verificacion.
+        featuresverificacion = extraerCaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_VERIFICATION);
+        
+        // Comprobar la calidad de la muestra de la huella y lo añade a su reclutador si es bueno
+        if (featuresinscripcion != null){
+            System.out.println("entro al if");
+            setFeaturesverificacion(featuresverificacion);
+            try{
+                System.out.println("Las Caracteristicas de la Huella han sido creada");
+                activo = true;
+                Reclutador.addFeatures(featuresinscripcion);// Agregar las caracteristicas de la huella a la plantilla a crear
+            }catch (DPFPImageQualityException ex) {
+                System.err.println("Error: "+ex.getMessage());
             }
-        });
+            finally {
+                
+                EstadoHuellas();
+                // Comprueba si la plantilla se ha creado.
+                switch(Reclutador.getTemplateStatus()){                    
+                    case TEMPLATE_STATUS_READY:	// informe de éxito y detiene  la captura de huellas
+                        System.out.println("exito!");
+                        setTemplate(Reclutador.getTemplate());
+                        stop();
+                        break;  
+
+                    case TEMPLATE_STATUS_FAILED: // informe de fallas y reiniciar la captura de huellas
+                        System.out.println("reinicio");
+                        Reclutador.clear();
+                        stop();
+                        EstadoHuellas();
+                        setTemplate(null);
+                        //JOptionPane.showMessageDialog(Capturas.this, "La Plantilla de la Huella no pudo ser creada, Repita el Proceso", "Inscripcion de Huellas Dactilares", JOptionPane.ERROR_MESSAGE);
+                        start();
+                        break;
+                }
+	    }
+        }
     }
     
-    @FXML
-    public void desactivar(){
-        lector.stopCapture();
-        System.out.println("desactivado");
+    public  DPFPFeatureSet extraerCaracteristicas(DPFPSample sample, DPFPDataPurpose purpose){
+        DPFPFeatureExtraction extractor = DPFPGlobal.getFeatureExtractionFactory().createFeatureExtraction();
+        try {
+            return extractor.createFeatureSet(sample, purpose);
+        } catch (DPFPImageQualityException e) {
+            return null;
+        }
     }
-            
+    
+    public DPFPTemplate getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(DPFPTemplate template) {
+        DPFPTemplate old = this.template;
+	this.template = template;
+	//firePropertyChange(TEMPLATE_PROPERTY, old, template);
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+    
+    public DPFPFeatureSet getFeaturesverificacion() {
+        return featuresverificacion;
+    }
+
+    public void setFeaturesverificacion(DPFPFeatureSet featuresverificacion) {
+        this.featuresverificacion = featuresverificacion;
+    }
+    
+    public DPFPTemplateStatus estadoHuellas(){
+        return Reclutador.getTemplateStatus();
+    }
+    
+    public  void start(){
+	lector.startCapture();
+	EnviarTexto("Utilizando el Lector de Huella Dactilar ");
+    }
+
+    public  void stop(){
+        lector.stopCapture();
+    //    EnviarTexto("No se está usando el Lector de Huella Dactilar ");
+    }
+    
+    public  void EstadoHuellas(){
+	//EnviarTexto("Muestra de Huellas Necesarias para Guardar Template "+ Reclutador.getFeaturesNeeded());
+        System.out.println("Muestra de Huellas Necesarias para Guardar Template " + Reclutador.getFeaturesNeeded());
+    }
+    
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    //aqui va a ir el metodo init de la huella y lo demas    
+        Iniciar();
     }    
 
     

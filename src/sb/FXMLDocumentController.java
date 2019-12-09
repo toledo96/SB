@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  * @author L745
  */
 public class FXMLDocumentController implements Initializable {
-    
+    //admin,registro,identificacion y reporte del dia
     @FXML
     private Label usuario_label,password_label;
     @FXML

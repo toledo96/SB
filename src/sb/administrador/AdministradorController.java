@@ -124,15 +124,14 @@ public class AdministradorController implements Initializable {
         String nombre = tf_nombre.getText();
         String paterno = tf_apellido_paterno.getText();
         String materno = tf_apellido_materno.getText();
-        int edad = Integer.valueOf(tf_edad.getText());
+        int edad = Integer.parseInt(tf_edad.getText());
         String telefono = tf_telefono.getText();
         LocalDate i = inicio.getValue();
         LocalDate f = fin.getValue();
         String observacion = ta_comentario.getText();
         String query = " DELETE FROM cliente WHERE id ='"+listita.getId()+ "';";        
         PreparedStatement preparedStmt = connection.prepareStatement(query);
-        preparedStmt.execute();     
-        connection.close();
+        preparedStmt.execute();             
         lista.remove(listita);
         table_clientes.refresh();
         new Alert(Alert.AlertType.INFORMATION, "eliminado").show();
@@ -155,7 +154,7 @@ public class AdministradorController implements Initializable {
         
         try {
             ResultSet rs = connection.createStatement().executeQuery(
-                    "select id,nombre,apellido_paterno,apellido_materno,edad,telefono,inicio,vencimiento,observaciones,huella from cliente"
+                    "select id,nombre,apellido_paterno,apellido_materno,edad,telefono,inicio,vencimiento,observaciones,foto from cliente"
             );            
             while(rs.next()){
 //                OutputStream  out = new FileOutputStream
@@ -168,7 +167,7 @@ public class AdministradorController implements Initializable {
                         rs.getDate("inicio"),
                         rs.getDate("vencimiento"), 
                         rs.getString("observaciones"), 
-                        rs.getBlob("huella")));                        
+                        rs.getBlob("foto")));                        
             }                       
             col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
             col_nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));

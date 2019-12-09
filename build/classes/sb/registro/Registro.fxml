@@ -122,7 +122,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="638.0" layoutY="420.0" mnemonicParsing="false" onAction="#activar" text="Activar" />
-      <Button layoutX="629.0" layoutY="448.0" mnemonicParsing="false" onAction="#desactivar" text="Desactivar" />
+      <Button layoutX="638.0" layoutY="420.0" mnemonicParsing="false" text="Activar" />
+      <Button layoutX="629.0" layoutY="448.0" mnemonicParsing="false" text="Desactivar" />
    </children>
 </AnchorPane>
