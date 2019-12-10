@@ -90,20 +90,24 @@ public class ReporteController implements Initializable {
        
        
        //Obtiene todas las huellas de la bd
-       PreparedStatement identificarStmt = connection.prepareStatement("SELECT huella FROM cliente");
+       PreparedStatement identificarStmt = connection.prepareStatement("SELECT nombre,huella FROM cliente");
        ResultSet rs = identificarStmt.executeQuery();
 
        //Si se encuentra el nombre en la base de datos
        while(rs.next()){
        //Lee la plantilla de la base de datos
        byte templateBuffer[] = rs.getBytes("huella");
+        String nombre=rs.getString("nombre");
        //Crea una nueva plantilla a partir de la guardada en la base de datos
        DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
        //Envia la plantilla creada al objeto contendor de Template del componente de huella digital
        setTemplate(referenceTemplate);
-
+       System.out.println(getTemplate());
        // Compara las caracteriticas de la huella recientemente capturda con la
        // alguna plantilla guardada en la base de datos que coincide con ese tipo
+       
+        System.out.println("featuresverificacion");
+        System.out.println(featuresverificacion);
        DPFPVerificationResult result = Verificador.verify(featuresverificacion, getTemplate());
 
        //compara las plantilas (actual vs bd)
@@ -111,19 +115,21 @@ public class ReporteController implements Initializable {
        //e indica el nombre de la persona que coincidió.
        if (result.isVerified()){
        //crea la imagen de los datos guardado de las huellas guardadas en la base de datos
-            System.out.println("bienvenido");
+            System.out.println("bienvenido" + " " + nombre);
        return;
                                }
        }
+       stop();
        //Si no encuentra alguna huella correspondiente al nombre lo indica con un mensaje
-         System.out.println("fuera prro");
-       setTemplate(null);
+       System.out.println("fuera prro");
+//       setTemplate(null);
        } catch (SQLException e) {
        //Si ocurre un error lo indica en la consola
        System.err.println("Error al identificar huella dactilar."+e.getMessage());
        }finally{
        connection.close();
        }
+     stop();
    }
     
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,7 +150,7 @@ public class ReporteController implements Initializable {
                     public void run() {
                         System.out.println("la huella se capturo");
                         try {
-                            //ProcesarCaptura(e.getSample());
+                            ProcesarCaptura(e.getSample());
                             identificarHuella();
                         } catch (IOException ex) {
                             Logger.getLogger(ReporteController.class.getName()).log(Level.SEVERE, null, ex);
