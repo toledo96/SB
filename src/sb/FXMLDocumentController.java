@@ -36,28 +36,28 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void admin() {
         try {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sb/administrador/Administrador.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root1));  
-        stage.show();
-    } catch(Exception e) {
-        e.printStackTrace();
-    }
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sb/administrador/Administrador.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));  
+            stage.show();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
         
     }
     
     @FXML
     private void cliente() {
-                try {
+        try {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sb/registro/Registro.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root1));  
         stage.show();
-    } catch(Exception e) {
+        } catch(Exception e) {
         e.printStackTrace();
-    }
+        }
     }
     
     @FXML

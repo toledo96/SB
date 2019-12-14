@@ -5,6 +5,9 @@
         <group>
             <file>file:/C:/Users/L745/Documents/NetBeansProjects/SB/src/sb/SB.java</file>
             <file>file:/C:/Users/L745/Documents/NetBeansProjects/SB/src/sb/reporte/ReporteController.java</file>
+            <file>file:/C:/Users/L745/Documents/NetBeansProjects/SB/src/sb/identificacion/IdentificacionController.java</file>
+            <file>file:/C:/Users/L745/Documents/NetBeansProjects/SB/src/sb/FXMLDocumentController.java</file>
+            <file>file:/C:/Users/L745/Documents/NetBeansProjects/SB/src/sb/registro/RegistroController.java</file>
         </group>
     </open-files>
 </project-private>
