@@ -64,6 +64,19 @@ public class FXMLDocumentController implements Initializable {
     private void reporte() {
         
     }
+    
+    @FXML
+    private void verificacion() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sb/identificacion/Identificacion.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 //    
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="SB.jar" size="566414" download="eager" />
+    <jar href="SB.jar" size="566423" download="eager" />
     <jar href="lib\dpfpenrollment.jar" size="323314" download="eager" />
     <jar href="lib\dpfpverification.jar" size="33662" download="eager" />
     <jar href="lib\dpotapi.jar" size="58858" download="eager" />

@@ -162,6 +162,7 @@ public class RegistroController implements Initializable {
         }else{
             System.out.println("vacio!");
         }
+
     }
     
     /////////////////////////////////Metodos nuevos////////////////////////////////////////////////////////////

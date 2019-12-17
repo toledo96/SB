@@ -18,8 +18,8 @@ public class SB extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("/sb/identificacion/Identificacion.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("/sb/identificacion/Identificacion.fxml"));
 //        Parent root = FXMLLoader.load(getClass().getResource("/sb/registro/Registro.fxml"));
         Scene scene = new Scene(root);
         this.initConnection();

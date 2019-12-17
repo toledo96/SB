@@ -79,7 +79,7 @@
             <DatePicker fx:id="inicio" layoutX="3.0" layoutY="32.0" prefHeight="27.0" prefWidth="194.0" promptText="Fecha de Inicio" />
          </children>
       </Pane>
-      <Button layoutX="320.0" layoutY="438.0" mnemonicParsing="false" onAction="#insert" prefHeight="43.0" prefWidth="139.0" text="Agregar" />
+      <Button layoutX="320.0" layoutY="431.0" mnemonicParsing="false" onAction="#insert" prefHeight="43.0" prefWidth="139.0" text="Agregar" />
       <Pane layoutX="14.0" layoutY="242.0" prefHeight="74.0" prefWidth="200.0">
          <children>
             <Label layoutX="71.0" layoutY="7.0" text="Edad" textAlignment="CENTER" textFill="WHITE">
@@ -108,7 +108,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="huella" fitHeight="82.0" fitWidth="130.0" layoutX="605.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="huella" fitHeight="82.0" fitWidth="100.0" layoutX="597.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../imagenes/huella.jpg" />
          </image>
@@ -122,7 +122,5 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="638.0" layoutY="420.0" mnemonicParsing="false" text="Activar" />
-      <Button layoutX="629.0" layoutY="448.0" mnemonicParsing="false" text="Desactivar" />
    </children>
 </AnchorPane>
