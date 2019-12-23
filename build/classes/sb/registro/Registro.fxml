@@ -97,7 +97,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <DatePicker fx:id="fin" layoutX="1.0" layoutY="37.0" prefHeight="27.0" prefWidth="200.0" promptText="Vencimiento" />
+            <DatePicker fx:id="fin" layoutY="26.0" prefHeight="27.0" prefWidth="200.0" promptText="Vencimiento" />
          </children>
       </Pane>
       <ImageView fx:id="usuario" fitHeight="110.0" fitWidth="148.0" layoutX="334.0" layoutY="58.0" onMouseClicked="#image" pickOnBounds="true" preserveRatio="true">
@@ -116,8 +116,8 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <TextArea fx:id="observaciones" layoutX="290.0" layoutY="366.0" prefHeight="43.0" prefWidth="224.0" promptText="observaciones" />
-      <Label layoutX="337.0" layoutY="331.0" prefHeight="27.0" prefWidth="130.0" text="Observaciones" textFill="WHITE">
+      <TextArea fx:id="observaciones" layoutX="290.0" layoutY="362.0" prefHeight="33.0" prefWidth="224.0" promptText="\$Cantidad" />
+      <Label layoutX="369.0" layoutY="332.0" prefHeight="27.0" prefWidth="51.0" text="Pago" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>

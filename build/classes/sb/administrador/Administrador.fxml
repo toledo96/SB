@@ -20,22 +20,22 @@
             <Image url="@../../imagenes/sb.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="353.0" prefHeight="51.0" prefWidth="183.0" text="Registro" textFill="WHITE" underline="true">
+      <Label layoutX="309.0" prefHeight="62.0" prefWidth="288.0" text="Administracion" textFill="WHITE" underline="true">
          <font>
             <Font name="System Italic" size="42.0" />
          </font>
       </Label>
-      <TableView fx:id="table_clientes" layoutX="246.0" layoutY="105.0" prefHeight="465.0" prefWidth="686.0">
+      <TableView fx:id="table_clientes" layoutX="246.0" layoutY="105.0" onMouseClicked="#seleccionar" prefHeight="465.0" prefWidth="686.0">
         <columns>
           <TableColumn fx:id="col_id" prefWidth="54.0" text="id" />
           <TableColumn fx:id="col_nombre" prefWidth="63.0" text="nombre" />
             <TableColumn fx:id="col_ap" prefWidth="109.0" text="Apellido Paterno" />
             <TableColumn fx:id="col_am" prefWidth="106.0" text="Apellido Materno" />
-            <TableColumn fx:id="col_edad" minWidth="6.0" prefWidth="41.0" text="edad" />
-            <TableColumn fx:id="col_tel" prefWidth="69.0" text="telefono" />
-            <TableColumn fx:id="col_inicio" prefWidth="49.0" text="inicio" />
-            <TableColumn fx:id="col_vencimiento" prefWidth="87.0" text="vencimiento" />
-            <TableColumn fx:id="col_comentario" prefWidth="100.0" text="observaciones" />
+            <TableColumn fx:id="col_edad" minWidth="6.0" prefWidth="41.0" text="Edad" />
+            <TableColumn fx:id="col_tel" prefWidth="69.0" text="Telefono" />
+            <TableColumn fx:id="col_inicio" prefWidth="49.0" text="Inicio" />
+            <TableColumn fx:id="col_vencimiento" prefWidth="87.0" text="Vencimiento" />
+            <TableColumn fx:id="col_comentario" prefWidth="100.0" text="\$Cantidad" />
             <TableColumn fx:id="col_foto_usuario" minWidth="4.0" prefWidth="4.0" text="foto" />
         </columns>
       </TableView>
@@ -51,11 +51,10 @@
       <TextField fx:id="tf_telefono" layoutX="34.0" layoutY="337.0" promptText="Telefono" />
       <DatePicker fx:id="inicio" layoutX="22.0" layoutY="377.0" promptText="fecha de inicio" />
       <DatePicker fx:id="fin" layoutX="22.0" layoutY="418.0" promptText="fecha de vencimiento" />
-      <TextArea fx:id="ta_comentario" layoutX="16.0" layoutY="461.0" prefHeight="106.0" prefWidth="211.0" promptText="Comentarios" />
-      <Button layoutX="93.0" layoutY="577.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="25.0" prefWidth="69.0" text="Eliminar" />
-      <Button layoutX="17.0" layoutY="577.0" mnemonicParsing="false" onAction="#editar" prefHeight="25.0" prefWidth="69.0" text="Editar" />
-      <Button layoutX="170.0" layoutY="577.0" mnemonicParsing="false" onAction="#seleccionar" prefHeight="25.0" prefWidth="76.0" text="Seleccionar" />
-      <TextField layoutX="296.0" layoutY="73.0" prefHeight="25.0" prefWidth="222.0" />
+      <Button layoutX="109.0" layoutY="503.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="25.0" prefWidth="69.0" text="Eliminar" />
+      <Button layoutX="34.0" layoutY="503.0" mnemonicParsing="false" onAction="#editar" prefHeight="25.0" prefWidth="69.0" text="Editar" />
+      <TextField fx:id="tf_buscar" layoutX="247.0" layoutY="73.0" prefHeight="25.0" prefWidth="271.0" />
       <Button layoutX="521.0" layoutY="73.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" text="Buscar" />
+      <TextField fx:id="ta_comentario" layoutX="35.0" layoutY="462.0" promptText="\$Cantidad" />
    </children>
 </AnchorPane>

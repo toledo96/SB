@@ -36,7 +36,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void admin() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sb/administrador/Administrador.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sb/login/Login.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));  

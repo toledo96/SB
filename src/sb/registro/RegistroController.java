@@ -151,10 +151,8 @@ public class RegistroController implements Initializable {
     public void image() throws FileNotFoundException{
         FileChooser fc = new FileChooser();
         file = fc.showOpenDialog(null);
-        System.out.println("fie:"+file.toString());
         fis = new FileInputStream(file);// file is selected using filechooser which is in last tutorial
         if(file != null){
-            System.out.println("hola");
             image = new Image(file.toURI().toString());
             usuario.setImage(null);
             usuario.setImage(image);
@@ -162,14 +160,12 @@ public class RegistroController implements Initializable {
         }else{
             System.out.println("vacio!");
         }
-
     }
     
     /////////////////////////////////Metodos nuevos////////////////////////////////////////////////////////////
 
     public void Iniciar(){
         start();
-        System.out.println("funciona");
         lector.addDataListener(new DPFPDataAdapter() {
             @Override 
             public void dataAcquired(final DPFPDataEvent e) {
@@ -177,7 +173,6 @@ public class RegistroController implements Initializable {
                     @Override
                     public void run(){
                         try {
-                            System.out.println("la huella se capturo");
                             ProcesarCaptura(e.getSample());
                         } catch (IOException ex) {
                             Logger.getLogger(RegistroController.class.getName()).log(Level.SEVERE, null, ex);
@@ -194,7 +189,7 @@ public class RegistroController implements Initializable {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        EnviarTexto("El Sensor de Huella Digital esta Activado o Conectado");
+                        //EnviarTexto("El Sensor de Huella Digital esta Activado o Conectado");
                     }
                 });                
             }
@@ -203,7 +198,7 @@ public class RegistroController implements Initializable {
                 Platform.runLater(new Runnable(){                
                     @Override
                     public void run(){
-                        EnviarTexto("El Sensor de Huella Digital esta Desactivado o no Conectado");
+                        //EnviarTexto("El Sensor de Huella Digital esta Desactivado o no Conectado");
                         
                     }           
                 });
@@ -216,7 +211,7 @@ public class RegistroController implements Initializable {
                 Platform.runLater(new Runnable(){                
                     @Override
                     public void run(){
-                        EnviarTexto("El dedo ha sido colocado sobre el Lector de Huella");
+                        //EnviarTexto("El dedo ha sido colocado sobre el Lector de Huella");
                     }           
                 });
             }
@@ -225,7 +220,7 @@ public class RegistroController implements Initializable {
                 Platform.runLater(new Runnable(){                
                     @Override
                     public void run(){
-                        EnviarTexto("El dedo ha sido quitado del Lector de Huella");
+                        //EnviarTexto("El dedo ha sido quitado del Lector de Huella");
                         
                     }           
                 });
@@ -238,7 +233,7 @@ public class RegistroController implements Initializable {
                 Platform.runLater(new Runnable(){                
                     @Override
                     public void run(){
-                        EnviarTexto("El dedo ha sido quitado del Lector de Huella");
+                        //EnviarTexto("El dedo ha sido quitado del Lector de Huella");
                         
                     }           
                 });
@@ -251,7 +246,7 @@ public class RegistroController implements Initializable {
     }
     
     public  void ProcesarCaptura(DPFPSample sample) throws IOException{
-        System.out.println("entro a procesar");
+        //System.out.println("entro a procesar");
         setTemplate(Reclutador.getTemplate());
         java.awt.Image imagen = DPFPGlobal.getSampleConversionFactory().createImage(sample);
         Image img = SwingFXUtils.toFXImage((BufferedImage) imagen, null);
@@ -268,10 +263,8 @@ public class RegistroController implements Initializable {
         
         // Comprobar la calidad de la muestra de la huella y lo añade a su reclutador si es bueno
         if (featuresinscripcion != null){
-            System.out.println("entro al if");
             setFeaturesverificacion(featuresverificacion);
             try{
-                System.out.println("Las Caracteristicas de la Huella han sido creada");
                 activo = true;
                 Reclutador.addFeatures(featuresinscripcion);// Agregar las caracteristicas de la huella a la plantilla a crear
             }catch (DPFPImageQualityException ex) {
@@ -283,7 +276,7 @@ public class RegistroController implements Initializable {
                 // Comprueba si la plantilla se ha creado.
                 switch(Reclutador.getTemplateStatus()){                    
                     case TEMPLATE_STATUS_READY:	// informe de éxito y detiene  la captura de huellas
-                        System.out.println("exito!");
+                        EnviarTexto("Exito!");
                         setTemplate(Reclutador.getTemplate());
                         stop();
                         break;  
@@ -343,7 +336,7 @@ public class RegistroController implements Initializable {
     
     public  void start(){
 	lector.startCapture();
-	EnviarTexto("Utilizando el Lector de Huella Dactilar ");
+	//EnviarTexto("Utilizando el Lector de Huella Dactilar ");
     }
 
     public  void stop(){
@@ -353,7 +346,7 @@ public class RegistroController implements Initializable {
     
     public  void EstadoHuellas(){
 	//EnviarTexto("Muestra de Huellas Necesarias para Guardar Template "+ Reclutador.getFeaturesNeeded());
-        System.out.println("Muestra de Huellas Necesarias para Guardar Template " + Reclutador.getFeaturesNeeded());
+        EnviarTexto("Muestra de Huellas Necesarias para Guardar Template " + Reclutador.getFeaturesNeeded());
     }
     
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -362,6 +355,7 @@ public class RegistroController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Iniciar();
+        //validar que se pare si solo se abre y se cierra
     }    
 
     

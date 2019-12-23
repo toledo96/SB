@@ -11,10 +11,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -48,9 +51,9 @@ public class AdministradorController implements Initializable {
     private TableColumn<Cliente,File>col_foto_usuario;    
     
 //    ******************Datos********************************************
-    public TextField tf_nombre,tf_apellido_materno,tf_apellido_paterno,tf_edad,tf_telefono;
+    public TextField tf_nombre,tf_apellido_materno,tf_apellido_paterno,tf_edad,tf_telefono,ta_comentario,tf_buscar;
     public DatePicker inicio,fin;
-    public TextArea ta_comentario;
+    //public TextArea ta_comentario;
     Connection connection;
     public Image image;
     public ImageView usuario;
@@ -183,6 +186,27 @@ public class AdministradorController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(AdministradorController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        FilteredList<Cliente> filtro = new FilteredList<>(lista,e->true);
+        tf_buscar.textProperty().addListener((observableValue,oldValue,newValue)->{
+            filtro.setPredicate((Predicate<? super Cliente>) cliente -> {
+                if(newValue == null || newValue.isEmpty()){
+                    return true;
+                }                
+                String filtro_minusculas = newValue.toLowerCase();                
+                if(cliente.getNombre().toLowerCase().contains(filtro_minusculas)){
+                    return true;
+                }else if(cliente.getApellido_paterno().toLowerCase().contains(filtro_minusculas)){
+                    return true;
+                }                
+                return false;
+            });
+            //aqui vamos
+            SortedList<Cliente> lista_orden =  new SortedList<>(filtro);
+            lista_orden.comparatorProperty().bind(table_clientes.comparatorProperty());
+            table_clientes.setItems(lista_orden);            
+        });
+        
         
     }
     

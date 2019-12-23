@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="167.0" prefWidth="311.0" style="-fx-background-color: #302F2F;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sb.login.LoginController">
+   <children>
+      <ImageView fitHeight="76.0" fitWidth="91.0" layoutX="118.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../imagenes/sb.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="103.0" layoutY="69.0" prefHeight="30.0" prefWidth="105.0" text="Contraseña" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="psf" layoutX="58.0" layoutY="99.0" prefHeight="25.0" prefWidth="209.0" promptText="Contraseña" />
+      <Button layoutX="130.0" layoutY="130.0" mnemonicParsing="false" onAction="#ingresar" text="Ingresar" />
+   </children>
+</AnchorPane>
