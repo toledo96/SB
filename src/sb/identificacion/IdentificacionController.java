@@ -297,6 +297,9 @@ public class IdentificacionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Iniciar();
+        if(label_name.getText().isEmpty() && label_end.getText().isEmpty()){
+            stop();
+        }
     }    
     
 }

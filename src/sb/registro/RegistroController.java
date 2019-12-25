@@ -88,11 +88,11 @@ public class RegistroController implements Initializable {
     public DPFPFeatureSet featuresverificacion;
     private Boolean activo;
 
-    
+//if(tf_nombre.getText().isEmpty() && tf_apellido_materno.getText().isEmpty() && tf_apellido_paterno.getText().isEmpty() && tf_edad.getText().isEmpty() && tf_telefono.getText().isEmpty() && imagen == false){ 
     @FXML
     public void insert() throws SQLException{
             try {
-
+                
                 this.connection = new SQLConnection("root", "", "sb").getConnection();
 
                 System.out.println("Conexion Lista");
@@ -356,6 +356,9 @@ public class RegistroController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Iniciar();
         //validar que se pare si solo se abre y se cierra
+        if(tf_nombre.getText().isEmpty() && tf_apellido_materno.getText().isEmpty() && tf_apellido_paterno.getText().isEmpty() && tf_edad.getText().isEmpty() && tf_telefono.getText().isEmpty() && imagen == false){
+            stop();
+        }
     }    
 
     

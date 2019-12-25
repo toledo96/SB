@@ -108,13 +108,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="huella" fitHeight="82.0" fitWidth="100.0" layoutX="597.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../imagenes/huella.jpg" />
-         </image>
+      <ImageView fx:id="huella" fitHeight="65.0" fitWidth="86.0" layoutX="597.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+         <image>
+            <Image url="@../../imagenes/huella.jpg" />
+         </image>
       </ImageView>
       <TextArea fx:id="observaciones" layoutX="290.0" layoutY="362.0" prefHeight="33.0" prefWidth="224.0" promptText="\$Cantidad" />
       <Label layoutX="369.0" layoutY="332.0" prefHeight="27.0" prefWidth="51.0" text="Pago" textFill="WHITE">

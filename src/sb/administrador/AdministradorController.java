@@ -146,7 +146,7 @@ public class AdministradorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-                this.connection = new SQLConnection("root", "", "sb").getConnection();
+                this.connection = new SQLConnection("andres", "contagiate", "sb").getConnection();
 
                 System.out.println("Conexion Lista");
 
